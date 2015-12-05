@@ -16,48 +16,24 @@ class Elevator
     @destinations << floor_num
   end
 
+  #moves elevator and returns current floor
   def move
     return if next_stop.nil?
+    return @destinations.shift if at_destination?
 
+    if next_stop > @current_floor
+      @current_floor += 1
+    else
+      @current_floor -= 1
+    end
 
+    @current_floor
+  end
 
+  private
+
+  def at_destination?
+    @current_floor == next_stop
   end
 
 end
-
-=begin
-  attr_reader :status, :direction, :current_floor, :next_stop
-
-  def initialize(current_floor, )
-  end
-
-  def move_elevator
-    
-  end
-
-  def next_floor
-  end
-
-  def call_from(floor, priority = false)
-  end
-
-  def is_on_route?(floor_num)
-  end
-
-  #private
-  
-  def remove_floor
-  end
-
-  def busy?
-    #if 
-
-  end
-
-  def set_direction(direction)
-
-  end
-
-end
-
-=end

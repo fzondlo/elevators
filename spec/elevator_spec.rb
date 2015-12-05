@@ -1,4 +1,5 @@
-require_relative "../elevator.rb"
+require_relative "../elevator"
+require_relative 'spec_helper'
 
 describe Elevator, "Move floors" do
   context "defaulted" do
@@ -35,27 +36,36 @@ describe Elevator, "Move floors" do
         expect(subject.current_floor).to eq 1
       end
 
-      it "moves one floor towards destination" do
+      it "moves one floor up towards destination" do
         subject.add_destination(3)
         subject.move
         expect(subject.current_floor).to eq 2
       end
+
+      it "moves one floor down towards destination" do
+        subject = Elevator.new(5, 1, 3)
+        subject.add_destination(1)
+        subject.move
+        expect(subject.current_floor).to eq 2
+      end
+
+      it "stops at destination" do
+        subject.add_destination(3)
+        3.times{subject.move}
+        expect(subject.current_floor).to eq(3)
+        expect(subject.next_stop).to be_nil
+      end
+
+      it "waits one move at each destination" do
+        subject.add_destination(3)
+        subject.add_destination(1)
+        moves = []
+        7.times do
+          moves << subject.move
+        end
+        expect(moves).to eq([2,3,3,2,1,1,nil])
+      end
+
     end
-
-    #it "can accept a destination"
-
-    #it "takes 5 stops to make it from floor 0 to floor 5" do
-      #elevator.call_from(5)
-      #10.times { elevator.move }
-      #expect 
-    #end
-
-
-
   end
-
-
-
-  
-
 end
