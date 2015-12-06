@@ -78,9 +78,22 @@ describe Elevator, "Move floors" do
         3.times{moves << subject.move}
         expect(moves).to eq([2,2,3])
       end
+
+      it "makes multiple stops on way to another destination" do
+        subject.add_destination(10)
+        subject.call_to(3, :up)
+        subject.call_to(5, :up)
+        subject.call_to(2, :up)
+        subject.call_to(6, :up)
+        subject.call_to(4, :up)
+        moves = []
+        16.times{moves << subject.move}
+        expect(moves).to eq([2,2,3,3,4,4,5,5,6,6,7,8,9,10,10,nil])
+      end
     end
 
     #make multiple stops in teh right direction after multiple moves
+
 
     #description "#distance_to_floor" do
       #it "calculates the distance to a given floor" do
