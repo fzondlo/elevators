@@ -30,6 +30,14 @@ class Elevator
     @current_floor
   end
 
+  def call_to(floor_num, direction)
+    if @destinations.any? and floor_num.between?(@current_floor,next_stop)
+      @destinations.unshift floor_num
+    else
+      add_destination(floor_num)
+    end
+  end
+
   private
 
   def at_destination?
